@@ -1,0 +1,32 @@
+name: 'Pytest and coverage action'
+description: 'Run pytest and coverage on your Python project and have the results posted to GitHub'
+inputs:
+  github_token:
+    description: 'GitHub token'
+    required: true
+    default: ${{ github.token }}
+  test_command:
+    description: 'Test command to run'
+    required: false
+    default: 'pytest'
+  coverage_command:
+    description: 'Coverage command to run'
+    required: false
+    default: 'coverage'
+  coverage_report:
+    description: 'Coverage report to generate'
+    required: false
+    default: 'json'
+  coverage_dir:
+    description: 'Directory to store coverage report'
+    required: false
+    default: 'coverage-results'
+outputs:
+  coverage-output:
+      description: 'Coverage ouput'
+      value: ${{ steps.coverage.outputs.coverage-output }}
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
